@@ -5,43 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>汪云霄 (Yunxiao Wang) - 个人主页</title>
     <style>
-        /* 1. 上半部分背景图 picture1 */
+        /* 1. 左侧背景图 picture1 */
         body::before {
             content: "";
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 50vh;
+            width: 50vw;
+            height: 100vh;
             background: url('picture1.jpg') center center / cover no-repeat;
             z-index: -2;
         }
 
-        /* 2. 下半部分背景图 picture2 */
+        /* 2. 右侧背景图 picture2 */
         body::after {
             content: "";
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: 50vh;
-            background: url('picture2.jpg') center bottom / cover no-repeat;
+            top: 0;
+            right: 0;
+            width: 50vw;
+            height: 100vh;
+            background: url('picture2.jpg') center center / cover no-repeat;
             z-index: -2;
         }
 
-        /* 3. 渐变蒙版：上下边缘透明，向中间逐渐变成泛白色，以突出文字 */
+        /* 3. 渐变蒙版：两侧透明，向中间逐渐变成纯色，以突出文字 */
         .bg-gradient-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            /* 改为自上而下的渐变 to bottom */
-            background: linear-gradient(to bottom, 
+            background: linear-gradient(to right, 
                 rgba(255, 255, 255, 0) 0%, 
                 rgba(255, 255, 255, 0.6) 15%, 
-                rgba(255, 255, 255, 0.95) 35%, 
-                rgba(255, 255, 255, 0.95) 65%, 
+                rgba(255, 255, 255, 0.95) 30%, 
+                rgba(255, 255, 255, 0.95) 70%, 
                 rgba(255, 255, 255, 0.6) 85%, 
                 rgba(255, 255, 255, 0) 100%
             );
@@ -53,14 +52,14 @@
             line-height: 1.6;
             color: #333;
             margin: 0;
-            padding: 60px 20px; /* 增加上下内边距，让滚动空间更充裕 */
+            padding: 40px 20px;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            /* 微透明的毛玻璃效果，保证文字不受背景图片干扰 */
-            background-color: rgba(255, 255, 255, 0.65);
+            /* 配合蒙版使用微透明的毛玻璃效果 */
+            background-color: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 50px;
@@ -173,299 +172,7 @@
             }
             /* 手机端由于屏幕窄，渐变蒙版调白一点以免看不清字 */
             .bg-gradient-overlay {
-                background: linear-gradient(to bottom, 
-                    rgba(255, 255, 255, 0.4) 0%, 
-                    rgba(255, 255, 255, 0.8) 15%, 
-                    rgba(255, 255, 255, 0.95) 35%, 
-                    rgba(255, 255, 255, 0.95) 65%, 
-                    rgba(255, 255, 255, 0.8) 85%, 
-                    rgba(255, 255, 255, 0.4) 100%
-                );
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="bg-gradient-overlay"></div>
-
-<div class="container">
-    <div class="header">
-        <h1>汪云霄</h1>
-        <p>上海交通大学 · 电子与通信工程 · 硕士研究生</p>
-        <p>hqwyx2003@sjtu.edu.cn | Base: Shanghai | <a href="https://github.com/creatorwyx" target="_blank">github.com/creatorwyx</a></p>
-    </div>
-
-    <div class="main-section-title">📄 个人简历</div>
-
-    <h2>🎓 教育背景</h2>
-    <div class="section-item">
-        <div class="item-header">
-            <h3>上海交通大学 - 电子与通信工程，硕士研究生（推免）</h3>
-            <span class="date">2025.09 - 2028.06</span>
-        </div>
-        <p>图像通信与网络工程研究所</p>
-    </div>
-    <div class="section-item">
-        <div class="item-header">
-            <h3>上海交通大学 - 信息工程，工学学士</h3>
-            <span class="date">2021.09 - 2025.06</span>
-        </div>
-        <p>电子信息与电气工程学院 | 电子工程系</p>
-    </div>
-
-    <h2>💻 技术栈</h2>
-    <div class="tech-stack">
-        <p><strong>Programming Languages:</strong> Python、C/C++、Java、MATLAB</p>
-        <p><strong>Components:</strong> PyTorch、TensorFlow、PySpark、Flink、Redis、STL</p>
-    </div>
-
-    <h2>🚀 实习与项目经历</h2>
-    
-    <div class="section-item">
-        <div class="item-header">
-            <h3>基于深度表征学习的序列推荐模型 | 腾讯广告算法大赛 (Top 10%)</h3>
-            <span class="date">2025.06 - 2025.10</span>
-        </div>
-        <ul>
-            <li><strong>核心贡献：</strong>面向海量多源特征与长序列建模场景，负责核心算法架构的重构与性能调优，大幅提升模型推荐准确度。</li>
-            <li><strong>多维特征工程：</strong>设计双通道特征融合机制，深度引入时间上下文特征（周期规律、时间衰减等）并进行目标对齐，增强模型对用户近期行为的上下文感知。</li>
-            <li><strong>模型架构演进：</strong>引入层次化时空单元（HSTU）升级骨干网络，结合 RoPE 旋转位置编码与 SwiGLU 门控机制，显著增强长序列建模的相对位置依赖与非线性表达能力。</li>
-            <li><strong>训练优化与收益：</strong>采用 InfoNCE 对比学习损失优化高维表征空间的各向同性；结合序列随机长度采样进行动态数据增强。系统离线 HR@10 提升至 0.1376，NDCG@10 提升至 0.0722，助力团队斩获大赛前 10% 优异成绩。</li>
-        </ul>
-    </div>
-
-    <div class="section-item">
-        <div class="item-header">
-            <h3>基于多路召回与在线精排的推荐系统 | 工业级算法落地项目</h3>
-            <span class="date">2025.03 - 2025.06</span>
-        </div>
-        <ul>
-            <li><strong>架构闭环：</strong>基于百万级交互数据，独立打通离线特征计算、近线流处理、在线多路召回与实时精排推理的完整工业级推荐闭环。</li>
-            <li><strong>离线批处理：</strong>依托 PySpark 搭建数据清洗与特征工程流水线；基于 TensorFlow 构建 DeepFM、DIN 等精排模型（相比基线模型 FM AUC 分别提升 1.5% 和 2.2%），并产出底层 Embedding 供召回层使用。</li>
-            <li><strong>在线检索引擎：</strong>开发高并发推荐 API，利用 Redis 实现用户动态画像与 Embedding 向量的高效读取；在排序层直接加载 TF SavedModel 完成实时 CTR 推理，单机压测 QPS 达 400+，端到端 P99 延迟稳定控制在 160ms 以内。</li>
-            <li><strong>近线流处理：</strong>引入 Flink 消费实时行为数据流，实现动态用户兴趣的亚秒级更新；集成 A/B 测试模块，支持对多路组合进行线上动态分流与效果验证。</li>
-        </ul>
-    </div>
-
-    <div class="section-item">
-        <div class="item-header">
-            <h3>基于深度学习的信号智能识别系统 | 产学研合作项目</h3>
-            <span class="date">2024.10 - 2025.03</span>
-        </div>
-        <ul>
-            <li><strong>核心贡献：</strong>针对边缘端计算资源受限问题，设计轻量化 TFIFC-CNN 干扰识别模型，并打通高通板卡的量化部署全链路。</li>
-            <li><strong>频谱处理与降维：</strong>通过多通道宽带频谱无缝拼接完成数据处理；利用滤波技术将二维时频图压缩为一维序列并融合时序特征，显著增强对扫频等时变信号的感知。</li>
-            <li><strong>轻量化网络验证：</strong>基于 1D-CNN 重构传统二维卷积网络，对比 2D-CNN 基线，在保障 13 种干扰场景高精分类（准确率达 99.4% 与 97.5%）的前提下，参数量与计算量分别锐减 98.78% 和 93.57%。</li>
-            <li><strong>高通端侧部署：</strong>基于高通 SNPE 工具链完成 PyTorch 模型的量化与 DLC 格式编译，成功部署于高通边缘板卡，完成低延迟识别验证。</li>
-        </ul>
-    </div>
-
-    <h2>🏆 荣誉奖项</h2>
-    <ul>
-        <li>2025 上海交通大学研究生学业奖学金 <span class="date">2025.12</span></li>
-        <li>2025 TAAC 腾讯广告算法大赛 <strong>Top 10%</strong> <span class="date">2025.10</span></li>
-        <li>2024 美国大学生数学建模竞赛 <strong>Top 20% (H奖)</strong> <span class="date">2024.04</span></li>
-    </ul>
-
-    <div class="main-section-title">🙋‍♂️ 关于本人</div>
-    
-    <div class="about-container">
-        <img src="picture3.jpg" alt="汪云霄的照片" class="about-photo">
-        
-        <div class="about-text">
-            <p><strong>你好，我是汪云霄！</strong></p>
-            <p>我目前专注于信号处理领域的相关研究，同时使用业余时间学习推荐系统，热衷于用优雅的代码解决复杂的工程问题。</p>
-            <p>在科研和代码之外，我也喜欢乒乓球，目前配置是两面狂飙和博芳碳，正在樊振东ALC和Vis中做艰难的选择。我始终相信，保持对世界的好奇心是持续进步的源动力。欢迎通过邮件与我交流！</p>
-        </div>
-    </div>
-
-</div>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>汪云霄 (Yunxiao Wang) - 个人主页</title>
-    <style>
-        /* 1. 上半部分背景图 picture1 */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 50vh;
-            background: url('picture1.jpg') center center / cover no-repeat;
-            z-index: -2;
-        }
-
-        /* 2. 下半部分背景图 picture2 */
-        body::after {
-            content: "";
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: 50vh;
-            background: url('picture2.jpg') center bottom / cover no-repeat;
-            z-index: -2;
-        }
-
-        /* 3. 渐变蒙版：上下边缘透明，向中间逐渐变成泛白色，以突出文字 */
-        .bg-gradient-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            /* 改为自上而下的渐变 to bottom */
-            background: linear-gradient(to bottom, 
-                rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.6) 15%, 
-                rgba(255, 255, 255, 0.95) 35%, 
-                rgba(255, 255, 255, 0.95) 65%, 
-                rgba(255, 255, 255, 0.6) 85%, 
-                rgba(255, 255, 255, 0) 100%
-            );
-            z-index: -1;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 60px 20px; /* 增加上下内边距，让滚动空间更充裕 */
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            /* 微透明的毛玻璃效果，保证文字不受背景图片干扰 */
-            background-color: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 50px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            border-bottom: 2px solid rgba(52, 152, 219, 0.5);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #2c3e50;
-            margin: 0 0 10px 0;
-            font-size: 2.5em;
-        }
-        .header p {
-            color: #5c6869;
-            margin: 5px 0;
-            font-size: 1.1em;
-            font-weight: 500;
-        }
-        .main-section-title {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 1.8em;
-            margin: 50px 0 30px 0;
-            padding-bottom: 15px;
-            border-bottom: 3px dashed rgba(189, 195, 199, 0.7);
-            letter-spacing: 2px;
-        }
-        h2 {
-            color: #2980b9;
-            margin-top: 30px;
-            border-bottom: 1px solid rgba(236, 240, 241, 0.8);
-            padding-bottom: 8px;
-        }
-        .section-item {
-            margin-bottom: 25px;
-        }
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-        .item-header h3 {
-            color: #34495e;
-            margin: 0 0 5px 0;
-        }
-        .date {
-            color: #7f8c8d;
-            font-style: italic;
-            white-space: nowrap;
-        }
-        ul {
-            margin-top: 10px;
-            padding-left: 20px;
-            color: #444;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .tech-stack {
-            background-color: rgba(236, 240, 241, 0.6);
-            padding: 15px;
-            border-radius: 5px;
-        }
-        
-        /* 关于本人模块样式 */
-        .about-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 30px;
-            background-color: rgba(248, 249, 250, 0.7);
-            padding: 30px;
-            border-radius: 8px;
-            margin-top: 20px;
-            border-left: 5px solid #3498db;
-        }
-        .about-photo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            flex-shrink: 0;
-        }
-        .about-text {
-            flex: 1;
-            color: #333;
-            font-size: 1.05em;
-            text-align: justify;
-        }
-        
-        /* 响应式设计：手机端自动变为上下排布 */
-        @media (max-width: 768px) {
-            .about-container {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .about-text {
-                text-align: center;
-            }
-            .item-header {
-                flex-direction: column;
-            }
-            /* 手机端由于屏幕窄，渐变蒙版调白一点以免看不清字 */
-            .bg-gradient-overlay {
-                background: linear-gradient(to bottom, 
-                    rgba(255, 255, 255, 0.4) 0%, 
-                    rgba(255, 255, 255, 0.8) 15%, 
-                    rgba(255, 255, 255, 0.95) 35%, 
-                    rgba(255, 255, 255, 0.95) 65%, 
-                    rgba(255, 255, 255, 0.8) 85%, 
-                    rgba(255, 255, 255, 0.4) 100%
-                );
+                background: rgba(255, 255, 255, 0.85);
             }
         }
     </style>
