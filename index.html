@@ -14,7 +14,7 @@
             margin: 0; padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #333;
-            background-color: #ffffff; /* 底部预留的空白底色 */
+            background-color: #ffffff;
             overflow: hidden;
         }
 
@@ -23,26 +23,25 @@
         .swiper-slide {
             position: relative;
             background-color: #ffffff;
-            overflow-y: auto; /* 允许在单页内上下滚动文字 */
+            overflow-y: auto; 
         }
         
-        /* 隐藏原本的滚动条，让页面更纯净 */
         .swiper-slide::-webkit-scrollbar { width: 0px; background: transparent; }
 
-        /* ================= 核心：半屏背景渐隐效果 ================= */
+        /* ================= 半屏背景渐隐效果 ================= */
         .slide-bg {
             position: absolute;
             top: 0; left: 0;
             width: 100%; 
-            height: 55vh; /* 覆盖上半部分 */
+            height: 55vh; 
             background-size: cover;
-            background-position: center 30%;
+            /* 【修改点1】：改为 center center，精准截取图片正中间的一半 */
+            background-position: center center; 
             background-repeat: no-repeat;
-            /* 重点：从上到下，从不透明渐渐变为完全透明 */
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 100%);
             z-index: 0;
-            pointer-events: none; /* 确保不阻挡文字点击 */
+            pointer-events: none; 
         }
 
         /* ================= 纯粹的文字排版区域 ================= */
@@ -52,7 +51,6 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            /* 将文字推到留白处（约从 40vh 开始） */
             padding-top: 40vh; 
             padding-bottom: 80px;
             padding-left: 30px;
@@ -71,17 +69,19 @@
         .page-subtitle {
             font-size: 1.1em;
             color: #7f8c8d;
-            margin-bottom: 30px;
+            /* 【修改点2】：缩小标题下方的留白 */
+            margin-bottom: 20px; 
             border-bottom: 2px solid #f1f2f6;
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
 
-        /* 线性文本排版（替代原本的卡片区块） */
+        /* 线性文本排版 */
         .text-line {
             font-size: 1.05em;
             color: #333;
-            line-height: 1.8;
-            margin-bottom: 18px;
+            /* 【修改点3】：收紧行距和段落间距 */
+            line-height: 1.6; 
+            margin-bottom: 12px; 
             text-align: justify;
         }
         .highlight {
@@ -95,18 +95,19 @@
             font-size: 1.3em;
             color: #111;
             font-weight: 700;
-            margin-top: 35px;
-            margin-bottom: 15px;
+            /* 【修改点4】：收紧小标题的上下间距 */
+            margin-top: 25px; 
+            margin-bottom: 12px;
             border-bottom: 1px solid #f1f2f6;
             padding-bottom: 8px;
         }
 
-        /* 关于本人模块重排 */
+        /* 关于本人模块 */
         .profile-wrap {
             display: flex;
             align-items: flex-start;
             gap: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .avatar {
             width: 130px; height: 130px;
@@ -117,14 +118,14 @@
             flex-shrink: 0;
         }
 
-        /* 荣誉奖项的纯文本列表 */
+        /* 荣誉奖项 */
         .award-line {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             font-size: 1.05em;
             color: #222;
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px dashed #eee;
         }
         .award-date {
@@ -142,7 +143,6 @@
             .swiper-button-next, .swiper-button-prev { display: none; }
         }
 
-        /* Swiper 指示器与箭头调暗，保持页面克制 */
         .swiper-button-next, .swiper-button-prev { color: rgba(0,0,0,0.2); }
         .swiper-button-next:hover, .swiper-button-prev:hover { color: rgba(0,0,0,0.6); }
         .swiper-pagination-bullet { background: #bdc3c7; opacity: 0.6; }
@@ -160,7 +160,7 @@
             <div class="slide-content">
                 <h1 class="page-title" style="font-size: 3em;">汪云霄</h1>
                 <div class="page-subtitle" style="border:none; margin-bottom: 10px; color:#2980b9;">上海交通大学 · 电子与通信工程 · 硕士研究生</div>
-                <div class="text-line" style="color:#7f8c8d; margin-bottom: 30px;">hqwyx2003@sjtu.edu.cn | Base: Shanghai | github.com/creatorwyx</div>
+                <div class="text-line" style="color:#7f8c8d; margin-bottom: 25px;">hqwyx2003@sjtu.edu.cn | Base: Shanghai | github.com/creatorwyx</div>
                 
                 <div class="section-heading">🎓 教育背景</div>
                 <div class="text-line">
@@ -175,7 +175,7 @@
                 <div class="section-heading">💻 技术栈</div>
                 <div class="text-line">
                     <span class="highlight">Programming Languages:</span> Python, C/C++, Java, MATLAB<br>
-                    <span class="highlight" style="margin-top: 8px; display: inline-block;">Components:</span> PyTorch, TensorFlow, PySpark, Flink, Redis, STL
+                    <span class="highlight" style="margin-top: 6px; display: inline-block;">Components:</span> PyTorch, TensorFlow, PySpark, Flink, Redis, STL
                 </div>
             </div>
         </div>
@@ -253,7 +253,7 @@
                 <div class="profile-wrap">
                     <img src="picture1.jpg" alt="汪云霄" class="avatar">
                     <div>
-                        <h2 class="page-title" style="font-size: 1.8em; margin-bottom: 15px;">你好，我是汪云霄！</h2>
+                        <h2 class="page-title" style="font-size: 1.8em; margin-bottom: 12px;">你好，我是汪云霄！</h2>
                         <div class="text-line">我目前专注于信号处理领域的相关研究，同时使用业余时间学习推荐系统，热衷于用优雅的代码解决复杂的工程问题。</div>
                         <div class="text-line" style="margin-bottom: 0;">在科研和代码之外，我也喜欢乒乓球和跑步。我始终相信，保持对世界的好奇心是持续进步的源动力。</div>
                     </div>
@@ -286,7 +286,7 @@
 <script>
     var swiper = new Swiper(".mySwiper", {
         spaceBetween: 0,
-        effect: "fade", /* 保持页面渐变切换 */
+        effect: "fade", 
         fadeEffect: { crossFade: true },
         grabCursor: true,
         pagination: { el: ".swiper-pagination", clickable: true },
