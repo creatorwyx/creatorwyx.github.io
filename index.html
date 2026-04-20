@@ -7,132 +7,108 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     
     <style>
-        /* ================= 全局基础设置 ================= */
-        html, body {
-            position: relative;
-            height: 100%;
-            margin: 0; padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #333;
-            background-color: #ffffff;
-            overflow: hidden;
-        }
-
-        .swiper { width: 100%; height: 100%; }
-
-        .swiper-slide {
-            position: relative;
-            background-color: #ffffff;
-            overflow-y: auto; 
-        }
+        /* ========================================================
+           👉 【页面排版控制面板】
+           在这里统一调整所有页面的间距与比例
+        ======================================================== */
         
+        /* 全局默认设置 (如果某一页没有独立设置，就会默认使用这里的参数) */
+        :root {
+            --default-text-start: 45vh;   /* 文字开始位置 (45vh代表屏幕45%的高度) */
+            --default-line-spacing: 1.2;  /* 文字行距 (1.2为紧凑的单倍行距) */
+            --default-para-spacing: 0px;  /* 段落间距 (段与段之间的额外留白) */
+        }
+
+        /* 第 1 页：基础信息 (内容较少，可以稍微往下放，行距稍微拉开一点点) */
+        .page-1 {
+            --text-start: 35vh; 
+            --line-spacing: 1.2;
+            --para-spacing: 0px;
+        }
+
+        /* 第 2 页：项目一 (内容较密，文字起点上移到40%，行距极致紧凑) */
+        .page-2 {
+            --text-start: 40vh;
+            --line-spacing: 1.2;
+            --para-spacing: 0px;
+        }
+
+        /* 第 3 页：项目二 */
+        .page-3 {
+            --text-start: 40vh;
+            --line-spacing: 1.2;
+            --para-spacing: 0px;
+        }
+
+        /* 第 4 页：项目三 */
+        .page-4 {
+            --text-start: 40vh;
+            --line-spacing: 1.2;
+            --para-spacing: 0px;
+        }
+
+        /* 第 5 页：个人简介与奖项 (这里为了让照片不被遮挡，起点可以设置在 42vh) */
+        .page-5 {
+            --text-start: 42vh;
+            --line-spacing: 1.4;
+            --para-spacing: 0px;
+        }
+
+        /* ================= 以下是底层样式控制，通常无需修改 ================= */
+        
+        html, body {
+            position: relative; height: 100%; margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            color: #333; background-color: #ffffff; overflow: hidden;
+        }
+        .swiper { width: 100%; height: 100%; }
+        .swiper-slide { position: relative; background-color: #ffffff; overflow-y: auto; }
         .swiper-slide::-webkit-scrollbar { width: 0px; background: transparent; }
 
-        /* ================= 半屏背景渐隐效果 ================= */
+        /* 半屏背景渐隐效果：高度自动根据文字起点（--text-start）计算延伸 10vh，实现完美过渡 */
         .slide-bg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; 
-            height: 55vh; /* 恢复到55vh，配合文字45vh的起始点让过渡更自然 */
-            background-size: cover;
-            background-position: center center; 
-            background-repeat: no-repeat;
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 100%);
-            z-index: 0;
-            pointer-events: none; 
+            position: absolute; top: 0; left: 0; width: 100%; 
+            height: calc(var(--text-start, var(--default-text-start)) + 10vh); 
+            background-size: cover; background-position: center center; background-repeat: no-repeat;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%);
+            z-index: 0; pointer-events: none; 
         }
 
-        /* ================= 纯粹的文字排版区域 ================= */
+        /* 文字排版区域：应用控制面板的变量 */
         .slide-content {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-top: 45vh; /* 【核心修改】：文字起始点下移到 45vh */
-            padding-bottom: 50px;
-            padding-left: 30px;
-            padding-right: 30px;
-            box-sizing: border-box;
+            position: relative; z-index: 1; width: 100%; max-width: 800px; margin: 0 auto;
+            padding-top: var(--text-start, var(--default-text-start)); 
+            padding-bottom: 50px; padding-left: 30px; padding-right: 30px; box-sizing: border-box;
         }
 
-        /* 标题排版（已去消防遮挡阴影） */
-        .page-title {
-            font-size: 2.2em;
-            color: #111;
-            margin: 0 0 4px 0;
-            font-weight: 800;
-            letter-spacing: 1px;
-            line-height: 1.1;
-        }
-        .page-subtitle {
-            font-size: 1.1em;
-            color: #7f8c8d;
-            margin-bottom: 10px; 
-            border-bottom: 1px solid #f1f2f6;
-            padding-bottom: 6px;
-        }
+        /* 标题排版 */
+        .page-title { font-size: 2.2em; color: #111; margin: 0 0 4px 0; font-weight: 800; letter-spacing: 1px; line-height: 1.1; }
+        .page-subtitle { font-size: 1.1em; color: #7f8c8d; margin-bottom: 10px; border-bottom: 1px solid #f1f2f6; padding-bottom: 6px; }
 
-        /* 线性文本排版（已去消防遮挡阴影） */
+        /* 线性文本排版：应用控制面板的行距与段距变量 */
         .text-line {
-            font-size: 1.05em;
-            color: #333;
-            line-height: 1.2; 
-            margin-bottom: 0px; 
-            text-align: justify;
+            font-size: 1.05em; color: #333; text-align: justify;
+            line-height: var(--line-spacing, var(--default-line-spacing)); 
+            margin-bottom: var(--para-spacing, var(--default-para-spacing)); 
         }
-        .highlight {
-            color: #2980b9;
-            font-weight: 700;
-            margin-right: 4px;
-        }
+        .highlight { color: #2980b9; font-weight: 700; margin-right: 4px; }
         
-        /* 章节小标题（已去消防遮挡阴影） */
-        .section-heading {
-            font-size: 1.3em;
-            color: #111;
-            font-weight: 700;
-            margin-top: 18px; 
-            margin-bottom: 6px;
-            border-bottom: 1px solid #f1f2f6;
-            padding-bottom: 4px;
-        }
+        /* 章节小标题 */
+        .section-heading { font-size: 1.3em; color: #111; font-weight: 700; margin-top: 18px; margin-bottom: 6px; border-bottom: 1px solid #f1f2f6; padding-bottom: 4px; }
 
         /* 关于本人模块 */
-        .profile-wrap {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        .avatar {
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            flex-shrink: 0;
-        }
+        .profile-wrap { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 15px; }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); flex-shrink: 0; }
 
-        /* 荣誉奖项（已去消防遮挡阴影） */
-        .award-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            font-size: 1.05em;
-            color: #222;
-            padding: 4px 0;
-            border-bottom: 1px dashed #eee;
-        }
-        .award-date {
-            color: #95a5a6;
-            font-size: 0.9em;
-        }
+        /* 荣誉奖项 */
+        .award-line { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.05em; color: #222; padding: 4px 0; border-bottom: 1px dashed #eee; }
+        .award-date { color: #95a5a6; font-size: 0.9em; }
 
         /* 移动端适配 */
         @media (max-width: 768px) {
-            .slide-content { padding-top: 40vh; padding-left: 20px; padding-right: 20px; }
+            /* 手机端通常屏幕较小，将全局起点统一微调上移，避免显示不下 */
+            .slide-content { padding-top: calc(var(--text-start, var(--default-text-start)) - 5vh); padding-left: 20px; padding-right: 20px; }
             .page-title { font-size: 1.8em; }
             .profile-wrap { flex-direction: column; align-items: center; text-align: center; }
             .award-line { flex-direction: column; align-items: flex-start; }
@@ -151,9 +127,8 @@
 <div class="swiper mySwiper">
     <div class="swiper-wrapper">
 
-        <div class="swiper-slide">
+        <div class="swiper-slide page-1">
             <div class="slide-bg" style="background-image: url('picture2.jpg');"></div>
-            
             <div class="slide-content">
                 <h1 class="page-title" style="font-size: 3em;">汪云霄</h1>
                 <div class="page-subtitle" style="border:none; margin-bottom: 8px; color:#2980b9;">上海交通大学 · 电子与通信工程 · 硕士研究生</div>
@@ -177,9 +152,8 @@
             </div>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide page-2">
             <div class="slide-bg" style="background-image: url('picture3.jpg');"></div>
-            
             <div class="slide-content">
                 <h2 class="page-title">基于深度表征学习的序列推荐模型</h2>
                 <div class="page-subtitle">腾讯广告算法大赛 (Top 10%) | 2025.06 - 2025.10</div>
@@ -199,9 +173,8 @@
             </div>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide page-3">
             <div class="slide-bg" style="background-image: url('picture4.jpg');"></div>
-            
             <div class="slide-content">
                 <h2 class="page-title">多路召回与在线精排推荐系统</h2>
                 <div class="page-subtitle">工业级算法落地项目 | 2025.03 - 2025.06</div>
@@ -221,9 +194,8 @@
             </div>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide page-4">
             <div class="slide-bg" style="background-image: url('picture5.jpg');"></div>
-            
             <div class="slide-content">
                 <h2 class="page-title">基于深度学习的信号智能识别系统</h2>
                 <div class="page-subtitle">产学研合作项目 | 2024.10 - 2025.03</div>
@@ -243,9 +215,8 @@
             </div>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide page-5">
             <div class="slide-bg" style="background-image: url('picture6.jpg');"></div>
-            
             <div class="slide-content">
                 <div class="profile-wrap">
                     <img src="picture1.jpg" alt="汪云霄" class="avatar">
