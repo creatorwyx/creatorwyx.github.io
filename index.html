@@ -12,25 +12,43 @@
            在这里统一调整所有页面的间距与比例
         ======================================================== */
         
-        /* 全局默认设置 (如果某一页没有独立设置，就会默认使用这里的参数) */
+        /* ⚙️ 全局默认设置 (如果某一页没有独立设置，就会默认使用这里的参数) */
         :root {
+            /* --- 📝 文字排版参数 --- */
             --default-text-start: 45vh;   /* 文字开始位置 (45vh代表屏幕45%的高度) */
             --default-line-spacing: 1.2;  /* 文字行距 (1.2为紧凑的单倍行距) */
             --default-para-spacing: 0px;  /* 段落间距 (段与段之间的额外留白) */
+
+            /* --- 🖼️ 图片排版参数 --- */
+            --default-bg-top: 0vh;             /* 图片起始位置：距离屏幕顶部的距离 (默认紧贴顶部) */
+            --default-bg-height: 55vh;         /* 图片结束位置：图片区域的总高度 */
+            --default-bg-position: center center; /* 图片构图焦点：如果想让人物脸部靠上，可改为 'center top' 或 'center 20%' */
+            --default-mask-solid: 40%;         /* 渐变过渡点：从高度的百分之几开始变模糊 (默认40%前清晰) */
+            --default-mask-transparent: 100%;  /* 完全透明点：通常为 100%，即在边缘完全消失 */
         }
 
-        /* 第 1 页：基础信息 (内容较少，可以稍微往下放，行距稍微拉开一点点) */
+        /* 第 1 页：基础信息 */
         .page-1 {
             --text-start: 25vh; 
             --line-spacing: 1.2;
             --para-spacing: 0px;
+            
+            /* 第 1 页图片独立控制 */
+            --bg-top: 0vh; 
+            --bg-height: 35vh; /* 因为文字靠上，图片也可以早点结束 */
+            --bg-position: center 65%;
         }
 
-        /* 第 2 页：项目一 (内容较密，文字起点上移到40%，行距极致紧凑) */
+        /* 第 2 页：项目一 */
         .page-2 {
             --text-start: 25vh;
             --line-spacing: 1.2;
             --para-spacing: 2px;
+
+            /* 第 2 页图片独立控制 */
+            --bg-top: 0vh;
+            --bg-height: 35vh;
+            --bg-position: center 10%; /* 焦点稍微偏上 */
         }
 
         /* 第 3 页：项目二 */
@@ -38,6 +56,11 @@
             --text-start: 30vh;
             --line-spacing: 1.4;
             --para-spacing: 2px;
+
+            /* 第 3 页图片独立控制 */
+            --bg-top: 0vh;
+            --bg-height: 40vh; 
+            --bg-position: center 10%; /* 焦点稍微偏上 */
         }
 
         /* 第 4 页：项目三 */
@@ -45,13 +68,23 @@
             --text-start: 30vh;
             --line-spacing: 1.6;
             --para-spacing: 4px;
+
+            /* 第 4 页图片独立控制 */
+            --bg-top: 0vh;
+            --bg-height: 40vh;
+            --bg-position: center 60%; /* 焦点稍微偏上 */
         }
 
-        /* 第 5 页：个人简介与奖项 (这里为了让照片不被遮挡，起点可以设置在 42vh) */
+        /* 第 5 页：个人简介与奖项 */
         .page-5 {
             --text-start: 30vh;
             --line-spacing: 1.6;
             --para-spacing: 2px;
+
+            /* 第 5 页图片独立控制 */
+            --bg-top: 0vh;
+            --bg-height: 40vh;
+            --bg-position: center 50%; /* 确保不截断重要内容 */
         }
 
         /* ================= 以下是底层样式控制，通常无需修改 ================= */
@@ -65,17 +98,31 @@
         .swiper-slide { position: relative; background-color: #ffffff; overflow-y: auto; }
         .swiper-slide::-webkit-scrollbar { width: 0px; background: transparent; }
 
-        /* 半屏背景渐隐效果：高度自动根据文字起点（--text-start）计算延伸 10vh，实现完美过渡 */
+        /* 半屏背景渐隐效果：现在高度、位置、焦点、渐隐位置全盘由变量控制 */
         .slide-bg {
-            position: absolute; top: 0; left: 0; width: 100%; 
-            height: calc(var(--text-start, var(--default-text-start)) + 10vh); 
-            background-size: cover; background-position: center center; background-repeat: no-repeat;
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%);
-            z-index: 0; pointer-events: none; 
+            position: absolute; left: 0; width: 100%; z-index: 0; pointer-events: none; 
+            
+            /* 起止位置与高度 */
+            top: var(--bg-top, var(--default-bg-top)); 
+            height: var(--bg-height, var(--default-bg-height)); 
+            
+            /* 图片填充与焦点 */
+            background-size: cover; 
+            background-position: var(--bg-position, var(--default-bg-position)); 
+            background-repeat: no-repeat;
+            
+            /* 渐隐遮罩效果 */
+            -webkit-mask-image: linear-gradient(to bottom, 
+                rgba(0,0,0,1) 0%, 
+                rgba(0,0,0,0.8) var(--mask-solid, var(--default-mask-solid)), 
+                rgba(0,0,0,0) var(--mask-transparent, var(--default-mask-transparent)));
+            mask-image: linear-gradient(to bottom, 
+                rgba(0,0,0,1) 0%, 
+                rgba(0,0,0,0.8) var(--mask-solid, var(--default-mask-solid)), 
+                rgba(0,0,0,0) var(--mask-transparent, var(--default-mask-transparent)));
         }
 
-        /* 文字排版区域：应用控制面板的变量 */
+        /* 文字排版区域 */
         .slide-content {
             position: relative; z-index: 1; width: 100%; max-width: 800px; margin: 0 auto;
             padding-top: var(--text-start, var(--default-text-start)); 
@@ -86,7 +133,7 @@
         .page-title { font-size: 2.2em; color: #111; margin: 0 0 4px 0; font-weight: 800; letter-spacing: 1px; line-height: 1.1; }
         .page-subtitle { font-size: 1.1em; color: #7f8c8d; margin-bottom: 10px; border-bottom: 1px solid #f1f2f6; padding-bottom: 6px; }
 
-        /* 线性文本排版：应用控制面板的行距与段距变量 */
+        /* 线性文本排版 */
         .text-line {
             font-size: 1.05em; color: #333; text-align: justify;
             line-height: var(--line-spacing, var(--default-line-spacing)); 
@@ -107,7 +154,6 @@
 
         /* 移动端适配 */
         @media (max-width: 768px) {
-            /* 手机端通常屏幕较小，将全局起点统一微调上移，避免显示不下 */
             .slide-content { padding-top: calc(var(--text-start, var(--default-text-start)) - 5vh); padding-left: 20px; padding-right: 20px; }
             .page-title { font-size: 1.8em; }
             .profile-wrap { flex-direction: column; align-items: center; text-align: center; }
