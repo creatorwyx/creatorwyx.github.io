@@ -36,9 +36,19 @@
             margin: 5px 0;
             font-size: 1.1em;
         }
+        /* 新增大板块标题样式 */
+        .main-section-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin: 50px 0 30px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px dashed #bdc3c7;
+            letter-spacing: 2px;
+        }
         h2 {
             color: #2980b9;
-            margin-top: 40px;
+            margin-top: 30px;
             border-bottom: 1px solid #ecf0f1;
             padding-bottom: 8px;
         }
@@ -72,6 +82,46 @@
             padding: 15px;
             border-radius: 5px;
         }
+        /* 关于本人模块样式 */
+        .about-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .about-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .about-text {
+            flex: 1;
+            color: #444;
+            font-size: 1.05em;
+            text-align: justify;
+        }
+        /* 响应式设计：手机端自动变为上下排布 */
+        @media (max-width: 600px) {
+            .about-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .about-text {
+                text-align: center;
+            }
+            .item-header {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -80,8 +130,10 @@
     <div class="header">
         <h1>汪云霄</h1>
         <p>上海交通大学 · 电子与通信工程 · 硕士研究生</p>
-        <p>hqwyx2003@sjtu.edu.cn | Base: Shanghai | <a href="https://github.com/creatorwyx" target="_blank">github.com/creatorwyx</a> </p>
+        <p>hqwyx2003@sjtu.edu.cn | Base: Shanghai | <a href="https://github.com/creatorwyx" target="_blank">github.com/creatorwyx</a></p>
     </div>
+
+    <div class="main-section-title">📄 个人简历</div>
 
     <h2>🎓 教育背景</h2>
     <div class="section-item">
@@ -93,7 +145,7 @@
     </div>
     <div class="section-item">
         <div class="item-header">
-            <h3>上海交通大学 - 信息工程，工学学士 </h3>
+            <h3>上海交通大学 - 信息工程，工学学士</h3>
             <span class="date">2021.09 - 2025.06</span>
         </div>
         <p>电子信息与电气工程学院 | 电子工程系</p>
@@ -109,8 +161,8 @@
     
     <div class="section-item">
         <div class="item-header">
-            <h3>基于深度表征学习的序列推荐模型 | 腾讯广告算法大赛 (Top 10%) </h3>
-            <span class="date">2025.06 - 2025.10 </span>
+            <h3>基于深度表征学习的序列推荐模型 | 腾讯广告算法大赛 (Top 10%)</h3>
+            <span class="date">2025.06 - 2025.10</span>
         </div>
         <ul>
             <li><strong>核心贡献：</strong>面向海量多源特征与长序列建模场景，负责核心算法架构的重构与性能调优，大幅提升模型推荐准确度。</li>
@@ -141,8 +193,8 @@
         <ul>
             <li><strong>核心贡献：</strong>针对边缘端计算资源受限问题，设计轻量化 TFIFC-CNN 干扰识别模型，并打通高通板卡的量化部署全链路。</li>
             <li><strong>频谱处理与降维：</strong>通过多通道宽带频谱无缝拼接完成数据处理；利用滤波技术将二维时频图压缩为一维序列并融合时序特征，显著增强对扫频等时变信号的感知。</li>
-            <li><strong>轻量化网络验证：</strong>基于 1D-CNN 重构传统二维卷积网络，对比 2D-CNN 基线，在保障 13 种干扰场景高精分类（准确率达 99.4% 与 97.5%）的前提下，参数量与计算量分别锐减 98.78% 和 93.57% 。</li>
-            <li><strong>高通端侧部署：</strong>基于高通 SNPE 工具链完成 PyTorch 模型的量化与 DLC 格式编译，成功部署于高通边缘板卡，完成低延迟识别验证 。</li>
+            <li><strong>轻量化网络验证：</strong>基于 1D-CNN 重构传统二维卷积网络，对比 2D-CNN 基线，在保障 13 种干扰场景高精分类（准确率达 99.4% 与 97.5%）的前提下，参数量与计算量分别锐减 98.78% 和 93.57%。</li>
+            <li><strong>高通端侧部署：</strong>基于高通 SNPE 工具链完成 PyTorch 模型的量化与 DLC 格式编译，成功部署于高通边缘板卡，完成低延迟识别验证。</li>
         </ul>
     </div>
 
@@ -152,6 +204,18 @@
         <li>2025 TAAC 腾讯广告算法大赛 <strong>Top 10%</strong> <span class="date">2025.10</span></li>
         <li>2024 美国大学生数学建模竞赛 <strong>Top 20% (H奖)</strong> <span class="date">2024.04</span></li>
     </ul>
+
+    <div class="main-section-title">🙋‍♂️ 关于本人</div>
+    
+    <div class="about-container">
+        <img src="profile.jpg" alt="汪云霄的照片" class="about-photo">
+        
+        <div class="about-text">
+            <p><strong>你好，我是汪云霄！</strong></p>
+            <p>我目前专注于信号处理领域的相关研究，同时使用业余时间学习推荐系统，热衷于用优雅的代码解决复杂的工程问题。</p>
+            <p>在科研和代码之外，我也喜欢乒乓球，目前配置是两狂飙和博芳碳，正在樊振东ALC和Vis中做艰难的选择。我始终相信，保持对世界的好奇心是持续进步的源动力。欢迎通过邮件与我交流！</p>
+        </div>
+    </div>
 
 </div>
 
