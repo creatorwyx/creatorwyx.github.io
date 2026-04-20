@@ -146,8 +146,8 @@
 
                 <div class="section-heading">💻 技术栈</div>
                 <div class="text-line">
-                    <span class="highlight">Programming Languages:</span> Python, C/C++, Java, MATLAB<br>
-                    <span class="highlight">Components:</span> PyTorch, TensorFlow, PySpark, Flink, Redis, STL
+                    <span class="highlight">Programming Languages:</span> Python, C/C++, MATLAB<br>
+                    <span class="highlight">Components:</span> PyTorch, TensorFlow, PySpark, STL
                 </div>
             </div>
         </div>
@@ -159,16 +159,22 @@
                 <div class="page-subtitle">腾讯广告算法大赛 (Top 10%) | 2025.06 - 2025.10</div>
                 
                 <div class="text-line">
-                    <span class="highlight">核心贡献：</span>面向海量多源特征与长序列建模场景，负责核心算法架构的重构与性能调优，大幅提升模型推荐准确度。
+                    <span class="highlight">核心贡献：</span>面向千万级交互数据 TencentGR-10M与用户长序列建模场景，负责核心推荐算法链路的重构与性能调优，大幅提升了模型推荐准确度与长尾冷门商品的召回能力。
                 </div>
                 <div class="text-line">
-                    <span class="highlight">多维特征工程：</span>设计双通道特征融合机制，深度引入时间上下文特征（周期规律、时间衰减等）并进行目标对齐，增强模型对用户近期行为的上下文感知。
+                    <span class="highlight">多维特征工程：</span>设计双通道特征融合机制，在深度引入行为时间间隔、多粒度时间衰减的时间上下文特征增强局部序列感知的基础上，融合商品全局转化率、用户活跃度等高阶离线统计特征，有效弥补了纯序列模型缺乏全局协同过滤信号的短板。
                 </div>
                 <div class="text-line">
-                    <span class="highlight">模型架构演进：</span>引入层次化时空单元（HSTU）升级骨干网络，结合 RoPE 旋转位置编码与 SwiGLU 门控机制，显著增强长序列建模的相对位置依赖与非线性表达能力。
+                    <span class="highlight">模型架构演进：</span>引入层次化时空单元（HSTU）替代传统 Self-Attention 升级骨干网络，大幅降低长序列计算复杂度；结合 RoPE 旋转位置编码与 SwiGLU 门控激活函数，显著增强了模型对长距离相对位置依赖的捕获与非线性特征交叉能力。
                 </div>
                 <div class="text-line">
-                    <span class="highlight">训练优化与收益：</span>采用 InfoNCE 对比学习损失优化高维表征空间的各向同性；结合序列随机长度采样进行动态数据增强。系统离线 HR@10 提升至 0.1376，NDCG@10 提升至 0.0722。
+                    <span class="highlight">训练机制优化：</span>采用 InfoNCE 对比学习损失替代传统交叉熵，优化高维表征空间的各向同性；构建基于序列动态长度随机截断的数据增强策略，有效扩充训练样本并缓解了固定窗口截断带来的绝对位置偏置问题。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">负采样与消偏策略：</span>针对对比学习面临的长尾分布与假阴性问题，将用户同频次或同类目下高曝光未点击商品作为负例构建难负例挖掘策略；通过商品全局出现频次引入 LogQ 进行对数概率修正，完成流行度消偏，极大释放了长尾冷门商品的表征潜力。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">系统收益验证：</span>经过上述模型架构与训练范式的重构，相比官方基线模型 SASRec，系统离线验证 HR@10 由 0.0404 提升至 0.1376，NDCG@10 由 0.0209 提升至 0.0722。该演进方案最终助力团队斩获大赛前10%的优异成绩。
                 </div>
             </div>
         </div>
@@ -176,20 +182,23 @@
         <div class="swiper-slide page-3">
             <div class="slide-bg" style="background-image: url('picture4.jpg');"></div>
             <div class="slide-content">
-                <h2 class="page-title">多路召回与在线精排推荐系统</h2>
-                <div class="page-subtitle">工业级算法落地项目 | 2025.03 - 2025.06</div>
+                <h2 class="page-title">端到端电影推荐系统</h2>
+                <div class="page-subtitle">工程项目 | 2025.03 - 2025.06</div>
                 
                 <div class="text-line">
-                    <span class="highlight">架构闭环：</span>基于百万级交互数据，独立打通离线特征计算、近线流处理、在线多路召回与实时精排推理的完整工业级推荐闭环。
+                    <span class="highlight">架构闭环：</span>基于 MovieLens 百万级交互数据，独立设计并打通了包含离线特征处理、在线多路召回与实时 CTR 精排推理的完整微服务推荐架构闭环。
                 </div>
                 <div class="text-line">
-                    <span class="highlight">离线批处理：</span>依托 PySpark 搭建数据清洗与特征工程流水线；基于 TensorFlow 构建 DeepFM、DIN 等精排模型（相比基线模型 FM AUC 分别提升 1.5% 和 2.2%），并产出底层 Embedding。
+                    <span class="highlight">离线特征工程：</span>依托 PySpark 搭建解耦的数据清洗与特征处理流水线，完成高维稀疏特征编码与画像生成，并将序列化结果批量同步至 Redis 集群，保障线上特征的高效读取。
                 </div>
                 <div class="text-line">
-                    <span class="highlight">在线检索引擎：</span>开发高并发推荐 API，利用 Redis 实现动态画像与 Embedding 的高效读取；在排序层加载 TF SavedModel 完成实时 CTR 推理，单机压测 QPS 达 400+，端到端 P99 延迟稳定控制在 160ms 内。
+                    <span class="highlight">多路召回策略：</span>离线基于 Item2Vec 产出物品底层 Embedding 向量表示；在线基于 Java 业务服务端，利用线程池异步并发执行涵盖向量近邻检索与协同过滤的多路召回策略，大幅缩减候选集生成耗时。
                 </div>
                 <div class="text-line">
-                    <span class="highlight">近线流处理：</span>引入 Flink 消费实时行为数据流，实现动态用户兴趣的亚秒级更新；集成 A/B 测试模块，支持对多路组合进行线上动态分流与效果验证。
+                    <span class="highlight">深度精排模型：</span>依托 TensorFlow 搭建推荐算法模型库，对比并训练 DeepFM 与 DIN 等排序模型，相比基线模型 FM，其 AUC 分别提升 1.5% 和 2.2%。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">在线高并发引擎：</span>打通模型线上化链路，在 Java 排序层集成 TensorFlow Java API 加载预训练 SavedModel，完成候选集的实时特征拼接与打分重排。经单机压测，QPS达400+，端到端P99延迟稳定控制在160ms内。
                 </div>
             </div>
         </div>
