@@ -33,12 +33,12 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; 
-            height: 45vh; /* 缩短背景图高度，配合文字上移 */
+            height: 55vh; /* 恢复到55vh，配合文字45vh的起始点让过渡更自然 */
             background-size: cover;
             background-position: center center; 
             background-repeat: no-repeat;
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 100%);
             z-index: 0;
             pointer-events: none; 
         }
@@ -50,14 +50,14 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            padding-top: 45vh; /* 【核心修改】：文字从45vh开始 */
+            padding-top: 45vh; /* 【核心修改】：文字起始点下移到 45vh */
             padding-bottom: 50px;
             padding-left: 30px;
             padding-right: 30px;
             box-sizing: border-box;
         }
 
-        /* 标题排版 */
+        /* 标题排版（已去消防遮挡阴影） */
         .page-title {
             font-size: 2.2em;
             color: #111;
@@ -65,7 +65,6 @@
             font-weight: 800;
             letter-spacing: 1px;
             line-height: 1.1;
-            text-shadow: 0 0 15px rgba(255,255,255,0.9); 
         }
         .page-subtitle {
             font-size: 1.1em;
@@ -73,17 +72,15 @@
             margin-bottom: 10px; 
             border-bottom: 1px solid #f1f2f6;
             padding-bottom: 6px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.9);
         }
 
-        /* 线性文本排版 */
+        /* 线性文本排版（已去消防遮挡阴影） */
         .text-line {
             font-size: 1.05em;
             color: #333;
-            line-height: 1.2; /* 【核心修改】：单倍行距 */
-            margin-bottom: 0px; /* 【核心修改】：取消段落间隔 */
+            line-height: 1.2; 
+            margin-bottom: 0px; 
             text-align: justify;
-            text-shadow: 0 0 8px rgba(255,255,255,0.8); /* 避免背景图干扰文字 */
         }
         .highlight {
             color: #2980b9;
@@ -91,16 +88,15 @@
             margin-right: 4px;
         }
         
-        /* 章节小标题 */
+        /* 章节小标题（已去消防遮挡阴影） */
         .section-heading {
             font-size: 1.3em;
             color: #111;
             font-weight: 700;
-            margin-top: 18px; /* 缩减上下间距 */
+            margin-top: 18px; 
             margin-bottom: 6px;
             border-bottom: 1px solid #f1f2f6;
             padding-bottom: 4px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.9);
         }
 
         /* 关于本人模块 */
@@ -119,7 +115,7 @@
             flex-shrink: 0;
         }
 
-        /* 荣誉奖项 */
+        /* 荣誉奖项（已去消防遮挡阴影） */
         .award-line {
             display: flex;
             justify-content: space-between;
@@ -128,7 +124,6 @@
             color: #222;
             padding: 4px 0;
             border-bottom: 1px dashed #eee;
-            text-shadow: 0 0 8px rgba(255,255,255,0.8);
         }
         .award-date {
             color: #95a5a6;
@@ -137,7 +132,7 @@
 
         /* 移动端适配 */
         @media (max-width: 768px) {
-            .slide-content { padding-top: 28vh; padding-left: 20px; padding-right: 20px; }
+            .slide-content { padding-top: 40vh; padding-left: 20px; padding-right: 20px; }
             .page-title { font-size: 1.8em; }
             .profile-wrap { flex-direction: column; align-items: center; text-align: center; }
             .award-line { flex-direction: column; align-items: flex-start; }
