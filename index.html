@@ -7,178 +7,146 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     
     <style>
-        /* ================= 全局排版 ================= */
+        /* ================= 全局基础设置 ================= */
         html, body {
             position: relative;
             height: 100%;
             margin: 0; padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #333;
+            background-color: #ffffff; /* 底部预留的空白底色 */
             overflow: hidden;
-            background-color: #000; /* 底色全黑，防止渐变过渡时闪白 */
         }
 
         .swiper { width: 100%; height: 100%; }
 
-        /* 每一页铺满屏幕，并设置背景图居中覆盖 */
         .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            position: relative;
+            background-color: #ffffff;
+            overflow-y: auto; /* 允许在单页内上下滚动文字 */
         }
-
-        /* ================= 卡片样式（完全透明） ================= */
-        .page-card {
-            width: 100%;
-            max-width: 880px;
-            max-height: 85vh;
-            overflow-y: auto;
-            background-color: transparent; /* 去掉白色底板 */
-            padding: 50px 60px;
-            box-sizing: border-box;
-        }
-        .page-card::-webkit-scrollbar { width: 6px; }
-        .page-card::-webkit-scrollbar-track { background: transparent; }
-        .page-card::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.3); border-radius: 3px; }
-
-        /* ================= 首页排版 ================= */
-        .hero-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .hero-header h1 {
-            font-size: 2.8em;
-            color: #1a252f;
-            margin: 0 0 5px 0;
-            letter-spacing: 2px;
-        }
-        .hero-header .subtitle {
-            font-size: 1.15em;
-            color: #2980b9;
-            font-weight: 600;
-            margin: 5px 0;
-        }
-        .hero-header .contact {
-            font-size: 0.95em;
-            color: #111;
-            margin-top: 10px;
-        }
-        .hero-header a { color: #3498db; text-decoration: none; }
         
-        .section-title {
-            font-size: 1.4em;
-            color: #2c3e50;
-            border-bottom: 2px solid rgba(0,0,0,0.2);
-            padding-bottom: 10px;
-            margin: 30px 0 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        /* 隐藏原本的滚动条，让页面更纯净 */
+        .swiper-slide::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* ================= 核心：半屏背景渐隐效果 ================= */
+        .slide-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; 
+            height: 55vh; /* 覆盖上半部分 */
+            background-size: cover;
+            background-position: center 30%;
+            background-repeat: no-repeat;
+            /* 重点：从上到下，从不透明渐渐变为完全透明 */
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 100%);
+            z-index: 0;
+            pointer-events: none; /* 确保不阻挡文字点击 */
         }
 
-        .edu-item {
+        /* ================= 纯粹的文字排版区域 ================= */
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            /* 将文字推到留白处（约从 40vh 开始） */
+            padding-top: 40vh; 
+            padding-bottom: 80px;
+            padding-left: 30px;
+            padding-right: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 标题排版 */
+        .page-title {
+            font-size: 2.2em;
+            color: #111;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .page-subtitle {
+            font-size: 1.1em;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 15px;
+        }
+
+        /* 线性文本排版（替代原本的卡片区块） */
+        .text-line {
+            font-size: 1.05em;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+        .highlight {
+            color: #2980b9;
+            font-weight: 700;
+            margin-right: 6px;
+        }
+        
+        /* 章节小标题 */
+        .section-heading {
+            font-size: 1.3em;
+            color: #111;
+            font-weight: 700;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f1f2f6;
+            padding-bottom: 8px;
+        }
+
+        /* 关于本人模块重排 */
+        .profile-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .avatar {
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            flex-shrink: 0;
+        }
+
+        /* 荣誉奖项的纯文本列表 */
+        .award-line {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 12px;
+            font-size: 1.05em;
+            color: #222;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
         }
-        .edu-item h4 { margin: 0; font-size: 1.1em; color: #111; }
-        .edu-item span { color: #333; font-size: 0.9em; white-space: nowrap; }
-        .edu-desc { margin: 4px 0 15px 0; color: #222; font-size: 0.95em; }
-
-        .tags-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;}
-        .tag {
-            background: transparent; /* 去掉标签底色 */
-            color: #2980b9;
-            padding: 6px 14px;
-            border-radius: 20px;
+        .award-date {
+            color: #95a5a6;
             font-size: 0.9em;
-            font-weight: 600;
-            border: 1px solid #2980b9;
         }
 
-        /* ================= 项目页网格排版 ================= */
-        .project-header { margin-bottom: 20px; }
-        .project-header h2 { margin: 0 0 5px 0; color: #1a252f; font-size: 1.6em; }
-        .project-meta { color: #e67e22; font-weight: 600; font-size: 1.05em; margin-bottom: 15px;}
-        .project-meta span.time { color: #333; font-weight: normal; font-size: 0.9em; float: right; }
-        .project-summary {
-            background: transparent; /* 去掉摘要底色 */
-            padding: 10px 20px;
-            border-left: 4px solid #34495e;
-            color: #111;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .feature-grid .feature-card:nth-child(3):last-child {
-            grid-column: 1 / -1;
-        }
-        
-        .feature-card {
-            background: transparent; /* 去掉卡片底色 */
-            border: 1px solid rgba(0,0,0,0.3); /* 改为半透明边框 */
-            padding: 20px;
-            border-radius: 10px;
-            transition: transform 0.2s;
-        }
-        .feature-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.1); }
-        .feature-card h4 { margin: 0 0 10px 0; color: #2980b9; font-size: 1.05em; }
-        .feature-card p { margin: 0; color: #111; font-size: 0.95em; line-height: 1.6; }
-
-        /* ================= 第五页排版 ================= */
-        .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            background: transparent; /* 去掉简介底色 */
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-        .profile-photo {
-            width: 140px; height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.5);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .profile-text h3 { margin: 0 0 10px 0; color: #1a252f; font-size: 1.4em;}
-        .profile-text p { margin: 8px 0; color: #111; line-height: 1.6; text-align: justify;}
-
-        .awards-list { padding: 0; list-style: none; }
-        .awards-list li {
-            display: flex; justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px dashed rgba(0,0,0,0.3);
-            color: #111; font-weight: 500;
-        }
-        .awards-list li span.date { color: #333; font-weight: normal; font-size: 0.9em; }
-
-        /* Swiper 控件调整 */
-        .swiper-button-next, .swiper-button-prev { color: rgba(0,0,0,0.6); transition: 0.3s; }
-        .swiper-button-next:hover, .swiper-button-prev:hover { color: #000; }
-        .swiper-pagination-bullet { background: #333; opacity: 0.5; }
-        .swiper-pagination-bullet-active { background: #000; opacity: 1; }
-
+        /* 移动端适配 */
         @media (max-width: 768px) {
-            .page-card { padding: 30px 20px; }
-            .feature-grid { grid-template-columns: 1fr; }
-            .feature-grid .feature-card:nth-child(3):last-child { grid-column: auto; }
-            .profile-section { flex-direction: column; text-align: center; padding: 25px 0;}
+            .slide-content { padding-top: 35vh; padding-left: 20px; padding-right: 20px; }
+            .page-title { font-size: 1.8em; }
+            .profile-wrap { flex-direction: column; align-items: center; text-align: center; }
+            .award-line { flex-direction: column; align-items: flex-start; }
+            .award-date { margin-top: 4px; }
             .swiper-button-next, .swiper-button-prev { display: none; }
-            .edu-item { flex-direction: column; }
-            .edu-item span { margin-top: 5px; }
         }
+
+        /* Swiper 指示器与箭头调暗，保持页面克制 */
+        .swiper-button-next, .swiper-button-prev { color: rgba(0,0,0,0.2); }
+        .swiper-button-next:hover, .swiper-button-prev:hover { color: rgba(0,0,0,0.6); }
+        .swiper-pagination-bullet { background: #bdc3c7; opacity: 0.6; }
+        .swiper-pagination-bullet-active { background: #34495e; opacity: 1; }
     </style>
 </head>
 <body>
@@ -186,154 +154,124 @@
 <div class="swiper mySwiper">
     <div class="swiper-wrapper">
 
-        <div class="swiper-slide" style="background-image: url('picture2.jpg');">
-            <div class="page-card">
-                <div class="hero-header">
-                    <h1>汪云霄</h1>
-                    <div class="subtitle">上海交通大学 · 电子与通信工程 · 硕士研究生</div>
-                    <div class="contact">
-                        hqwyx2003@sjtu.edu.cn | Base: Shanghai | <a href="https://github.com/creatorwyx" target="_blank">github.com/creatorwyx</a>
-                    </div>
-                </div>
-
-                <div class="section-title">🎓 教育背景</div>
-                <div class="edu-item">
-                    <h4>上海交通大学 - 电子与通信工程，硕士研究生（推免）</h4>
-                    <span>2025.09 - 2028.06</span>
-                </div>
-                <div class="edu-desc">图像通信与网络工程研究所</div>
+        <div class="swiper-slide">
+            <div class="slide-bg" style="background-image: url('picture2.jpg');"></div>
+            
+            <div class="slide-content">
+                <h1 class="page-title" style="font-size: 3em;">汪云霄</h1>
+                <div class="page-subtitle" style="border:none; margin-bottom: 10px; color:#2980b9;">上海交通大学 · 电子与通信工程 · 硕士研究生</div>
+                <div class="text-line" style="color:#7f8c8d; margin-bottom: 30px;">hqwyx2003@sjtu.edu.cn | Base: Shanghai | github.com/creatorwyx</div>
                 
-                <div class="edu-item">
-                    <h4>上海交通大学 - 信息工程，工学学士</h4>
-                    <span>2021.09 - 2025.06</span>
+                <div class="section-heading">🎓 教育背景</div>
+                <div class="text-line">
+                    <strong>上海交通大学</strong> - 电子与通信工程，硕士研究生（推免） (2025.09 - 2028.06)<br>
+                    <span style="color:#7f8c8d; font-size:0.95em;">图像通信与网络工程研究所</span>
                 </div>
-                <div class="edu-desc">电子信息与电气工程学院 | 电子工程系</div>
+                <div class="text-line">
+                    <strong>上海交通大学</strong> - 信息工程，工学学士 (2021.09 - 2025.06)<br>
+                    <span style="color:#7f8c8d; font-size:0.95em;">电子信息与电气工程学院 | 电子工程系</span>
+                </div>
 
-                <div class="section-title">💻 技术栈</div>
-                <div class="tags-container">
-                    <span class="tag">Python</span>
-                    <span class="tag">C/C++</span>
-                    <span class="tag">Java</span>
-                    <span class="tag">MATLAB</span>
-                    <span class="tag">PyTorch</span>
-                    <span class="tag">TensorFlow</span>
-                    <span class="tag">PySpark</span>
-                    <span class="tag">Flink</span>
-                    <span class="tag">Redis</span>
-                    <span class="tag">STL</span>
+                <div class="section-heading">💻 技术栈</div>
+                <div class="text-line">
+                    <span class="highlight">Programming Languages:</span> Python, C/C++, Java, MATLAB<br>
+                    <span class="highlight" style="margin-top: 8px; display: inline-block;">Components:</span> PyTorch, TensorFlow, PySpark, Flink, Redis, STL
                 </div>
             </div>
         </div>
 
-        <div class="swiper-slide" style="background-image: url('picture3.jpg');">
-            <div class="page-card">
-                <div class="project-header">
-                    <h2>基于深度表征学习的序列推荐模型</h2>
-                    <div class="project-meta">腾讯广告算法大赛 (Top 10%) <span class="time">2025.06 - 2025.10</span></div>
-                </div>
-                <div class="project-summary">
-                    面向海量多源特征与长序列建模场景，负责核心算法架构的重构与性能调优，系统离线 HR@10 提升至 0.1376，NDCG@10 提升至 0.0722，大幅提升模型推荐准确度。
-                </div>
+        <div class="swiper-slide">
+            <div class="slide-bg" style="background-image: url('picture3.jpg');"></div>
+            
+            <div class="slide-content">
+                <h2 class="page-title">基于深度表征学习的序列推荐模型</h2>
+                <div class="page-subtitle">腾讯广告算法大赛 (Top 10%) | 2025.06 - 2025.10</div>
                 
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h4>特征工程融合</h4>
-                        <p>设计双通道特征融合机制，深度引入时间上下文特征（周期规律、时间衰减等）并进行目标对齐，增强模型对用户近期行为的感知。</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>HSTU 架构演进</h4>
-                        <p>引入层次化时空单元升级骨干网络，结合 RoPE 旋转位置编码与 SwiGLU 门控机制，显著增强长序列建模的相对位置依赖与非线性表达。</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>InfoNCE 训练优化</h4>
-                        <p>采用对比学习损失优化高维表征空间的各向同性；结合序列随机长度采样进行动态数据增强。</p>
-                    </div>
+                <div class="text-line">
+                    <span class="highlight">核心贡献：</span>面向海量多源特征与长序列建模场景，负责核心算法架构的重构与性能调优，大幅提升模型推荐准确度。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">多维特征工程：</span>设计双通道特征融合机制，深度引入时间上下文特征（周期规律、时间衰减等）并进行目标对齐，增强模型对用户近期行为的上下文感知。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">模型架构演进：</span>引入层次化时空单元（HSTU）升级骨干网络，结合 RoPE 旋转位置编码与 SwiGLU 门控机制，显著增强长序列建模的相对位置依赖与非线性表达能力。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">训练优化与收益：</span>采用 InfoNCE 对比学习损失优化高维表征空间的各向同性；结合序列随机长度采样进行动态数据增强。系统离线 HR@10 提升至 0.1376，NDCG@10 提升至 0.0722。
                 </div>
             </div>
         </div>
 
-        <div class="swiper-slide" style="background-image: url('picture4.jpg');">
-            <div class="page-card">
-                <div class="project-header">
-                    <h2>多路召回与在线精排推荐系统</h2>
-                    <div class="project-meta">工业级算法落地项目 <span class="time">2025.03 - 2025.06</span></div>
-                </div>
-                <div class="project-summary">
-                    基于百万级交互数据，独立打通离线特征计算、近线流处理、在线多路召回与实时精排推理的完整工业级推荐闭环。
-                </div>
+        <div class="swiper-slide">
+            <div class="slide-bg" style="background-image: url('picture4.jpg');"></div>
+            
+            <div class="slide-content">
+                <h2 class="page-title">多路召回与在线精排推荐系统</h2>
+                <div class="page-subtitle">工业级算法落地项目 | 2025.03 - 2025.06</div>
                 
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h4>离线批处理 (PySpark)</h4>
-                        <p>搭建数据清洗与特征工程流水线；基于 TensorFlow 构建 DeepFM、DIN 精排模型，相比基线 FM AUC 分别提升 1.5% 和 2.2%。</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>在线检索 (Redis + TF)</h4>
-                        <p>开发高并发推荐 API，在排序层加载 TF SavedModel 完成实时 CTR 推理，单机压测 QPS 达 400+，P99 延迟稳定控制在 160ms 内。</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>近线流处理 (Flink)</h4>
-                        <p>消费实时行为数据流，实现动态用户兴趣亚秒级更新；集成 A/B 测试模块，支持多路组合线上动态分流验证。</p>
-                    </div>
+                <div class="text-line">
+                    <span class="highlight">架构闭环：</span>基于百万级交互数据，独立打通离线特征计算、近线流处理、在线多路召回与实时精排推理的完整工业级推荐闭环。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">离线批处理：</span>依托 PySpark 搭建数据清洗与特征工程流水线；基于 TensorFlow 构建 DeepFM、DIN 等精排模型（相比基线模型 FM AUC 分别提升 1.5% 和 2.2%），并产出底层 Embedding。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">在线检索引擎：</span>开发高并发推荐 API，利用 Redis 实现动态画像与 Embedding 的高效读取；在排序层加载 TF SavedModel 完成实时 CTR 推理，单机压测 QPS 达 400+，端到端 P99 延迟稳定控制在 160ms 内。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">近线流处理：</span>引入 Flink 消费实时行为数据流，实现动态用户兴趣的亚秒级更新；集成 A/B 测试模块，支持对多路组合进行线上动态分流与效果验证。
                 </div>
             </div>
         </div>
 
-        <div class="swiper-slide" style="background-image: url('picture5.jpg');">
-            <div class="page-card">
-                <div class="project-header">
-                    <h2>基于深度学习的信号智能识别系统</h2>
-                    <div class="project-meta">产学研合作项目 <span class="time">2024.10 - 2025.03</span></div>
-                </div>
-                <div class="project-summary">
-                    针对边缘端计算资源受限问题，设计轻量化 TFIFC-CNN 干扰识别模型，并全链路打通高通板卡的量化部署验证。
-                </div>
+        <div class="swiper-slide">
+            <div class="slide-bg" style="background-image: url('picture5.jpg');"></div>
+            
+            <div class="slide-content">
+                <h2 class="page-title">基于深度学习的信号智能识别系统</h2>
+                <div class="page-subtitle">产学研合作项目 | 2024.10 - 2025.03</div>
                 
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h4>频谱处理与降维</h4>
-                        <p>通过多通道宽带无缝拼接完成数据处理，利用滤波技术将二维时频图压缩为一维序列并融合时序特征，增强对时变信号的感知。</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>1D-CNN 轻量化</h4>
-                        <p>重构传统二维卷积，在保障 13 种干扰场景高精分类（准确率达 99.4%）前提下，参数量与计算量锐减 98.78% 和 93.57%。</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>SNPE 端侧部署</h4>
-                        <p>基于高通 SNPE 工具链完成 PyTorch 模型的量化与 DLC 格式编译，成功部署于高通边缘板卡，完成低延迟识别。</p>
-                    </div>
+                <div class="text-line">
+                    <span class="highlight">核心贡献：</span>针对边缘端计算资源受限问题，设计轻量化 TFIFC-CNN 干扰识别模型，并打通高通板卡的量化部署全链路。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">频谱处理与降维：</span>通过多通道宽带频谱无缝拼接完成数据处理；利用滤波技术将二维时频图压缩为一维序列并融合时序特征，显著增强对扫频等时变信号的感知。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">轻量化网络验证：</span>基于 1D-CNN 重构传统二维卷积网络，对比 2D-CNN 基线，在保障 13 种干扰场景高精分类（准确率达 99.4% 与 97.5%）的前提下，参数量与计算量分别锐减 98.78% 和 93.57%。
+                </div>
+                <div class="text-line">
+                    <span class="highlight">高通端侧部署：</span>基于高通 SNPE 工具链完成 PyTorch 模型的量化与 DLC 格式编译，成功部署于高通边缘板卡，完成低延迟识别验证。
                 </div>
             </div>
         </div>
 
-        <div class="swiper-slide" style="background-image: url('picture6.jpg');">
-            <div class="page-card">
-                
-                <div class="profile-section">
-                    <img src="picture1.jpg" alt="汪云霄的照片" class="profile-photo">
-                    <div class="profile-text">
-                        <h3>你好，我是汪云霄！</h3>
-                        <p>我目前专注于信号处理领域的相关研究，同时使用业余时间学习推荐系统，热衷于用优雅的代码解决复杂的工程问题。</p>
-                        <p>在科研和代码之外，我也喜欢乒乓球和跑步。我始终相信，保持对世界的好奇心是持续进步的源动力。</p>
+        <div class="swiper-slide">
+            <div class="slide-bg" style="background-image: url('picture6.jpg');"></div>
+            
+            <div class="slide-content">
+                <div class="profile-wrap">
+                    <img src="picture1.jpg" alt="汪云霄" class="avatar">
+                    <div>
+                        <h2 class="page-title" style="font-size: 1.8em; margin-bottom: 15px;">你好，我是汪云霄！</h2>
+                        <div class="text-line">我目前专注于信号处理领域的相关研究，同时使用业余时间学习推荐系统，热衷于用优雅的代码解决复杂的工程问题。</div>
+                        <div class="text-line" style="margin-bottom: 0;">在科研和代码之外，我也喜欢乒乓球和跑步。我始终相信，保持对世界的好奇心是持续进步的源动力。</div>
                     </div>
                 </div>
 
-                <div class="section-title">🏆 荣誉奖项</div>
-                <ul class="awards-list">
-                    <li>
-                        <span>2025 上海交通大学研究生学业奖学金</span>
-                        <span class="date">2025.12</span>
-                    </li>
-                    <li>
-                        <span>2025 TAAC 腾讯广告算法大赛 <strong>Top 10%</strong></span>
-                        <span class="date">2025.10</span>
-                    </li>
-                    <li>
-                        <span>2024 美国大学生数学建模竞赛 <strong>Top 20% (H奖)</strong></span>
-                        <span class="date">2024.04</span>
-                    </li>
-                </ul>
-
+                <div class="section-heading">🏆 荣誉奖项</div>
+                <div class="award-line">
+                    <strong>2025 上海交通大学研究生学业奖学金</strong>
+                    <span class="award-date">2025.12</span>
+                </div>
+                <div class="award-line">
+                    <strong>2025 TAAC 腾讯广告算法大赛 <span style="color:#2980b9;">Top 10%</span></strong>
+                    <span class="award-date">2025.10</span>
+                </div>
+                <div class="award-line">
+                    <strong>2024 美国大学生数学建模竞赛 <span style="color:#2980b9;">Top 20% (H奖)</span></strong>
+                    <span class="award-date">2024.04</span>
+                </div>
             </div>
         </div>
 
@@ -348,10 +286,8 @@
 <script>
     var swiper = new Swiper(".mySwiper", {
         spaceBetween: 0,
-        effect: "fade", /* 改为渐变切换 */
-        fadeEffect: {
-            crossFade: true /* 开启交叉渐隐，效果更平滑 */
-        },
+        effect: "fade", /* 保持页面渐变切换 */
+        fadeEffect: { crossFade: true },
         grabCursor: true,
         pagination: { el: ".swiper-pagination", clickable: true },
         navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
