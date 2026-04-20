@@ -1,2 +1,144 @@
-<h1>欢迎来到我的个人主页！</h1>
-<p>这里将展示我的研究与项目。</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汪云霄 (Yunxiao Wang) - 个人主页</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f4f7f6;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            color: #7f8c8d;
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        .section-item {
+            margin-bottom: 25px;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .item-header h3 {
+            color: #34495e;
+            margin: 0 0 5px 0;
+        }
+        .date {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            color: #555;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .tech-stack {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>汪云霄</h1>
+        <p>上海交通大学 · 电子与通信工程 · 硕士研究生</p>
+        <p>hqwyx2003@sjtu.edu.cn | Base: Shanghai | <a href="https://github.com/creatorwyx" target="_blank">github.com/creatorwyx</a></p>
+    </div>
+
+    <h2>🎓 教育背景</h2>
+    <div class="section-item">
+        <div class="item-header">
+            <h3>上海交通大学 - 电子与通信工程，硕士研究生（推免）</h3>
+            <span class="date">2025.09 - 2028.06</span>
+        </div>
+        <p>图像通信与网络工程研究所</p>
+    </div>
+    <div class="section-item">
+        <div class="item-header">
+            <h3>上海交通大学 - 信息工程，工学学士</h3>
+            <span class="date">2021.09 - 2025.06</span>
+        </div>
+        <p>电子信息与电气工程学院 | 电子工程系</p>
+    </div>
+
+    <h2>💻 技术栈</h2>
+    <div class="tech-stack">
+        <p><strong>Programming Languages:</strong> Python、C/C++、MATLAB</p>
+        <p><strong>Components:</strong> PyTorch、TensorFlow、PySpark、STL</p>
+    </div>
+
+    <h2>🚀 实习与项目经历</h2>
+    
+    <div class="section-item">
+        <div class="item-header">
+            <h3>基于深度表征学习的序列推荐模型 | 腾讯广告算法大赛</h3>
+            <span class="date">2025.06 - 2025.10</span>
+        </div>
+        <ul>
+            <li><strong>赛果与贡献：</strong>斩获大赛 <strong>Top 10%</strong> 优异成绩。负责核心推荐算法链路的重构与性能调优，提升模型推荐准确度与长尾召回能力。系统离线验证 HR@10 提升至 0.1376，NDCG@10 提升至 0.0722。</li>
+            <li><strong>多维特征工程：</strong>设计双通道特征融合机制，引入多粒度时间衰减特征增强局部序列感知，并融合全局统计特征。</li>
+            <li><strong>模型架构演进：</strong>引入层次化时空单元（HSTU）替代传统 Self-Attention 升级骨干网络；结合 RoPE 旋转位置编码与 SwiGLU 门控激活函数，增强长距离相对位置依赖捕获。</li>
+            <li><strong>训练优化与消偏：</strong>采用 InfoNCE 对比学习损失优化高维表征；通过商品全局出现频次引入 LogQ 进行对数概率修正，完成流行度消偏。</li>
+        </ul>
+    </div>
+
+    <div class="section-item">
+        <div class="item-header">
+            <h3>端到端电影推荐系统 | 独立工程项目</h3>
+            <span class="date">2025.03 - 2025.06</span>
+        </div>
+        <ul>
+            <li><strong>架构闭环：</strong>基于百万级交互数据，独立打通包含离线特征处理、在线多路召回与实时 CTR 精排推理的完整微服务推荐架构。</li>
+            <li><strong>特征与召回：</strong>依托 PySpark 搭建流水线同步高维稀疏特征至 Redis；利用 Java 线程池异步并发执行 Item2Vec 向量近邻检索与协同过滤多路召回策略。</li>
+            <li><strong>在线高并发引擎：</strong>在 Java 排序层集成 TensorFlow Java API 加载预训练模型，经单机压测 QPS 达 400+，端到端 P99 延迟稳定控制在 160ms 内。</li>
+        </ul>
+    </div>
+
+    <h2>🏆 荣誉奖项</h2>
+    <ul>
+        <li>2025 上海交通大学研究生学业奖学金 <span class="date">2025.12</span></li>
+        <li>2025 TAAC 腾讯广告算法大赛 <strong>Top 10%</strong> <span class="date">2025.10</span></li>
+        <li>2024 美国大学生数学建模竞赛（MCM）<strong>Top 20% (H奖)</strong> <span class="date">2024.04</span></li>
+    </ul>
+
+</div>
+
+</body>
+</html>
